@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Duct Velocity Calculator - ESIC Hospital Pithampur</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        input[type="file"]:hover,
+        input[type="text"]:focus,
+        select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .card .unit {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .status-ok {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .status-revise {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        th {
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9ff;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f5f7ff;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .status-ok {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-revise {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .formulae {
+            background-color: #f8f9ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                flex-direction: column;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 HVAC DUCT VELOCITY CALCULATOR</h1>
+            <p>ESIC Hospital – Pithampur (M.P.) | Ground Floor HVAC Equipment Schedule</p>
+            <p style="font-size: 12px; margin-top: 10px;">Drawing Ref: HVAC Layout – Ground Floor | Date: 25.08.2025 | Project: ESIC/M.P./AR/HOSPITAL-PL-01</p>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="fileInput">📁 Upload Excel File:</label>
+                <input type="file" id="fileInput" accept=".xlsx, .xls">
+            </div>
+            <button onclick="loadSampleData()">📊 Load Sample Data</button>
+            <button onclick="exportToCSV()">💾 Export CSV</button>
+        </div>
+
+        <div class="formulae">
+            <strong>📐 CALCULATION FORMULAE:</strong><br>
+            • Duct Area (m²) = W(mm)/1000 × H(mm)/1000<br>
+            • Flow (m³/s) = CFM × 0.000472<br>
+            • Flow (m³/h) = Flow(m³/s) × 3600<br>
+            • Velocity (m/s) = Flow(m³/s) / Area(m²)<br>
+            • Velocity (m/min) = Vel(m/s) × 60<br>
+            • Velocity (fpm) = Vel(m/min) × 3.281
+        </div>
+
+        <div class="summary-cards" id="summaryCards">
+            <div class="card">
+                <h3>Total Units</h3>
+                <div class="value" id="totalUnits">0</div>
+            </div>
+            <div class="card">
+                <h3>Status OK</h3>
+                <div class="value" id="statusOk">0</div>
+            </div>
+            <div class="card">
+                <h3>Status Revise</h3>
+                <div class="value" id="statusRevise">0</div>
+            </div>
+            <div class="card">
+                <h3>Avg Velocity (m/s)</h3>
+                <div class="value" id="avgVelocity">0.00</div>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SR NO</th>
+                        <th>UNIT TAG</th>
+                        <th>ZONE / ROOM</th>
+                        <th>CAP (TR)</th>
+                        <th>CFM</th>
+                        <th>W (mm)</th>
+                        <th>H (mm)</th>
+                        <th>AREA (m²)</th>
+                        <th>FLOW (m³/s)</th>
+                        <th>FLOW (m³/h)</th>
+                        <th>VEL (m/s)</th>
+                        <th>VEL (m/min)</th>
+                        <th>VEL (fpm)</th>
+                        <th>LIMIT</th>
+                        <th>STATUS</th>
+                        <th>REMARK</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td colspan="16" style="text-align: center; color: #999;">No data loaded. Upload an Excel file or click "Load Sample Data"</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>HVAC Duct Velocity Calculator v1.0 | Last Updated: 2026-06-14</p>
+            <p>For issues or support, visit the project repository on GitHub</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
