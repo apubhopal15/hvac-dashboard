@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Dashboard Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e8e8e8;
+            border-color: #bbb;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f5f7ff 0%, #f0f0ff 100%);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: #f0f8ff;
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .footer {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 HVAC DASHBOARD</h1>
+            <p>ESIC Hospital – Pithampur (M.P.)</p>
+            <p style="font-size: 14px; color: #999; margin-top: 10px;">Duct Velocity Calculator & Analysis System</p>
+        </div>
+
+        <div class="buttons">
+            <a href="hvac-duct.html" class="btn btn-primary">📊 Open Dashboard</a>
+            <a href="QUICKSTART.md" class="btn btn-secondary">📖 Quick Start Guide</a>
+            <a href="https://github.com/apubhopal15/hvac-dashboard" target="_blank" class="btn btn-secondary">💻 GitHub Repository</a>
+        </div>
+
+        <div class="info-box">
+            <h3>📋 What is this?</h3>
+            <p>
+                This HVAC Dashboard is designed to calculate and analyze duct velocity for HVAC systems 
+                at ESIC Hospital Pithampur. Upload your Excel file with HVAC equipment schedules, and the 
+                dashboard will automatically calculate all velocity parameters and validate them against 
+                CPWD (Central Public Works Department) standards.
+            </p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>📁 Excel Integration</h3>
+                <p>Upload your HVAC data files in Excel format (.xlsx, .xls) and get instant calculations.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Real-time Analysis</h3>
+                <p>Automatic velocity calculations with instant status validation against CPWD limits.</p>
+            </div>
+            <div class="feature-card">
+                <h3>💾 Export Results</h3>
+                <p>Download your calculations as CSV files for reports and documentation.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📱 Responsive Design</h3>
+                <p>Access the dashboard from desktop, tablet, or mobile devices.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎯 Status Indicators</h3>
+                <p>Clear visual indicators show which units meet CPWD standards and which need revision.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📐 Automatic Calculations</h3>
+                <p>All HVAC velocity formulas calculated automatically with high precision.</p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>🚀 Getting Started</h3>
+            <p>
+                <strong>Option 1 - Quick Start:</strong> Click "Open Dashboard" to access the calculator immediately.<br><br>
+                <strong>Option 2 - Load Sample Data:</strong> Once in the dashboard, click "Load Sample Data" to see example calculations.<br><br>
+                <strong>Option 3 - Upload Your Data:</strong> Click "Upload Excel File" and select your HVAC equipment schedule file.<br><br>
+                For detailed instructions, see the <a href="QUICKSTART.md">Quick Start Guide</a>.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>HVAC Dashboard v1.0 | Created: 2026-06-14 | Project: ESIC Hospital Pithampur</p>
+            <p>© 2026 apubhopal15 | MIT License</p>
+        </div>
+    </div>
+</body>
+</html>
